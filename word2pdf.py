@@ -5,14 +5,16 @@ wordpath: 根目录，其下只包含多级子目录和 doc 文件。
 """
 
 import os
+import re
+from tqdm import tqdm
 from win32com import client
 
 def doc2pdf(wordpath):
     for root, dirs, files in os.walk(wordpath, topdown=False):
         ##后缀名为 doc,docx
-        for name in [f for f in files if f.split('.')[-1] in ['docx', 'doc']]:
+        for name in tqdm([f for f in files if f.split('.')[-1] in ['docx', 'doc']]):
             doc_name = os.path.join(root, name)
-            pdf_name = os.path.join(root, name.split('.')[-2])+'.pdf'
+            pdf_name = os.path.join(root, re.sub('\.(doc|docx)$', ".pdf", name))
             try:
                 word = client.DispatchEx('Word.Application')
                 worddoc = word.Documents.Open(doc_name, ReadOnly = 1)
@@ -22,7 +24,6 @@ def doc2pdf(wordpath):
                 os.remove(doc_name)
             except Exception as e:
                 print(e)
-                print("error")
                 return
                 
 wordpath = "C:\\Users\\lauer\\Desktop\\word_root"
