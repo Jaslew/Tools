@@ -1,3 +1,4 @@
 # Tools
 
-word2pdf.py : convert .doc files to .pdf files by batch.
+## word2pdf.py
+Convert .doc/.docx files into .pdf files by batch.
