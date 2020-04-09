@@ -1,6 +1,6 @@
 """
-wordpath: 根目录，其下只包含多级子目录和 doc 文件。
-将根目录下所有子目录里的 doc 文件替换成 pdf 文件（会删除原 doc 文件）。
+wordpath: 根目录，其下可包含多级子目录。
+功能：将根目录下找到所有 .doc/.docx 文件替换成 .pdf 文件（默认将删除原文件）。
 
 """
 
@@ -21,6 +21,7 @@ def doc2pdf(wordpath):
                 worddoc.SaveAs(pdf_name, FileFormat = 17)
                 worddoc.Close(True)
                 word.Quit()
+                ##删除源文件
                 os.remove(doc_name)
             except Exception as e:
                 print(e)
