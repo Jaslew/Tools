@@ -9,9 +9,10 @@ from win32com import client
 
 def doc2pdf(wordpath):
     for root, dirs, files in os.walk(wordpath, topdown=False):
-        for name in [f for f in files if f.split('.')[-1] == 'doc']:
+        ##后缀名为 doc,docx
+        for name in [f for f in files if f.split('.')[-1] in ['docx', 'doc']]:
             doc_name = os.path.join(root, name)
-            pdf_name = os.path.join(root, name.split('.')[0])+'.pdf'
+            pdf_name = os.path.join(root, name.split('.')[-2])+'.pdf'
             try:
                 word = client.DispatchEx('Word.Application')
                 worddoc = word.Documents.Open(doc_name, ReadOnly = 1)
